@@ -63,7 +63,7 @@ public class LD28 extends JGame {
 	private static PopupMenu endGame = null;
 	private static Menu mainMenu;
 	private static Menu instructions;
-	public static final int WIDTH = 1024, HEIGHT = 768;
+	public static final int WIDTH = 800, HEIGHT = 600;
 	private static GoalObject go = null;
 	public static ArrayList<Turret> turrets = new ArrayList<Turret>();
 	public static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -78,10 +78,9 @@ public class LD28 extends JGame {
 	public static Music buzz;
 	public static Music siren;
 	
-	public LD28() {
+	public LD28(boolean applet) {
 		super();
 		setResolution(WIDTH, HEIGHT);
-		frame.setResizable(false);
 		initControls();
 		loadSounds();
 		loadLevel();
@@ -94,15 +93,18 @@ public class LD28 extends JGame {
 			e.printStackTrace();
 		}
 		screen = SCREEN.MENU;
-		mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 108f, "",  "Level 1", "Level 2", "Instructions", "Quit");
+		if(applet) {
+			mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 96f, "",  "Level 1", "Level 2", "Instructions");
+		} else {
+			mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 96f, "",  "Level 1", "Level 2", "Instructions", "Quit");
+		}
 		mainMenu.setFont(rexlia);
-		mainMenu.setFontSize(84f);
-		instructions = new Menu("Instructions", WIDTH, HEIGHT, false, 72f, " ", "WAD / Space / Arrow keys to move", " ", "You have been hired to steal a", "valuable gem, once you find it,","you have one minute to find", "the exit and escape."," "," ", "ESC to return to main menu");
+		mainMenu.setFontSize(60f);
+		instructions = new Menu("Instructions", WIDTH, HEIGHT, false, 60f, " ", "WAD / Space / Arrow keys to move", " ", "You have been hired to steal a", "valuable gem, once you find it,","you have one minute to find", "the exit and escape."," "," ", "ESC to return to main menu");
 		instructions.setFont(rexlia);
-		instructions.setFontSize(48f);
+		instructions.setFontSize(36f);
 		
-		
-		init(1.0 / 60.0);
+		init(60.0);
 	}
 	
 	private void loadSounds() {
@@ -255,7 +257,7 @@ public class LD28 extends JGame {
 							bullets.get(i).draw(g, cam);
 						}
 					} catch (IndexOutOfBoundsException e) {
-						// e.printStackTrace();
+						 //e.printStackTrace();
 					}
 				}
 				for(int i = 0, j = turrets.size(); i < j; i++) {
@@ -312,8 +314,8 @@ public class LD28 extends JGame {
 		g.setFont(old);
 	}
 	
-	public void update(float dt) {
-		frame.setTitle("LD28 - " + getFPS());
+	public void update(double dt) {
+		//frame.setTitle("LD28 - " + getFPS());
 		if(screen == SCREEN.GAME) {
 			switch(screenstate) {
 				case DIALOG:
@@ -367,7 +369,7 @@ public class LD28 extends JGame {
 		switch(level) {
 			case ONE:
 				setupLevel1();
-				showDialog(48f, "Boss: Alright, I'm counting on you to steal this gem, this is the only chance we'll ever get.",
+				showDialog(40f, "Boss: Alright, I'm counting on you to steal this gem, this is the only chance we'll ever get.",
 						"Unfortunately... you are by far, without a doubt, the absolute worst thief I have ever laid eyes on!",
 						"This building is equipped with top notch security, so if, er.. when you set off the alarm, you'll only have 1 minute to get the hell out alive!",
 						"Me: Alive? But don't I get multiple lives or something?",
@@ -376,7 +378,7 @@ public class LD28 extends JGame {
 				break;
 			case TWO:
 				setupLevel2();
-				showDialog(48f, "Boss: I'll never understand how you managed to get me that last gem, but to be honest, I don't give a shit if you die. You know the drill: GET THAT GEM!");
+				showDialog(40f, "Boss: I'll never understand how you managed to get me that last gem, but to be honest, I don't give a shit if you die. You know the drill: GET THAT GEM!");
 				break;
 		}
 		
@@ -396,7 +398,7 @@ public class LD28 extends JGame {
 		resetData();
 		
 		map = TMXParser.loadTMXMap("/maps/data/map1.tmx");
-		cam = new Camera(frame.getWidth(), frame.getHeight(), new Rectangle(map.getPxWidth(), map.getPxHeight()));
+		cam = new Camera(WIDTH, HEIGHT, new Rectangle(map.getPxWidth(), map.getPxHeight()));
 		go = new GoalObject(new Vector2(32 * 64 + 16, 64 * 10 + 32), map, GColor.RED);
 		p = new Player(new Vector2(64 * 1, 64 * 6), map, go);
 		
@@ -425,7 +427,7 @@ public class LD28 extends JGame {
 		resetData();
 		
 		map = TMXParser.loadTMXMap("/maps/data/map2.tmx");
-		cam = new Camera(frame.getWidth(), frame.getHeight(), new Rectangle(map.getPxWidth(), map.getPxHeight()));
+		cam = new Camera(WIDTH, HEIGHT, new Rectangle(map.getPxWidth(), map.getPxHeight()));
 		go = new GoalObject(new Vector2(64 * 2 + 16, 64 * 26 + 32), map, GColor.BLUE);
 		p = new Player(new Vector2(64 * 1, 64 * 2), map, go);
 		
@@ -495,7 +497,7 @@ public class LD28 extends JGame {
 		lockdown = true; // F*CKED MODE
 		countdown = 60.0; // GTFO
 		map.createExit(p);
-		buzz.play(true, 2);
-		siren.play(true, 2);
+		buzz.play(true, 0.75);
+		siren.play(true, 0.75);
 	}
 }

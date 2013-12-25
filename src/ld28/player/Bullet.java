@@ -25,7 +25,7 @@ public class Bullet extends Sprite {
 		activeAnim.draw(g, x, y);
 	}
 	
-	public void update(float dt) {
+	public void update(double dt) {
 		position.add(vel);
 		
 		if(world.collide(getBounds())) {

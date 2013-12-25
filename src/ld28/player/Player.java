@@ -75,7 +75,16 @@ public class Player extends Sprite {
 	}
 	
 	private void drawFlashLightEffect(Graphics2D g, int x, int y) {
-		Paint paint = new RadialGradientPaint((float) (x + size.x / 2), (float) (y + size.y / 2), 300, new float[] { 0.0f, 1.0f }, new Color[] { new Color(255, 0, 0, (int) (160 - MathUtils.lerp(0, 160, health / MAX_HEALTH))), new Color(0, 0, 0, 255) });
+		float cx = (float) (x + size.x / 2);
+		float cy = (float) (y + size.y / 2);
+		int rad = 300;
+		float[] range = { 0.0f, 1.0f };
+		
+		Color a = new Color(255, 0, 0, (int) (160 - MathUtils.lerp(0, 160, health / MAX_HEALTH)));
+		Color b = Color.BLACK;
+		Color[] cols = { a, b };
+		
+		Paint paint = new RadialGradientPaint(cx, cy, rad, range, cols);
 		g.setPaint(paint);
 		g.fillRect(0, 0, LD28.WIDTH, LD28.HEIGHT);
 	}
@@ -88,7 +97,7 @@ public class Player extends Sprite {
 		g.fillRect(x1, LD28.HEIGHT - 25, (int) (MathUtils.lerp(x1, x2, health / MAX_HEALTH) - x1), 20);
 	}
 	
-	public void update(float dt) {
+	public void update(double dt) {
 		state = State.IDLE;
 		boolean flipped = false;
 		// Movement

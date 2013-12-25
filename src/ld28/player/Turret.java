@@ -32,11 +32,7 @@ public class Turret extends Sprite {
 		this.target = target;
 		size = new Vector2(64, 32);
 		world = map;
-		try {
-			base = ImageIO.read(FileIOHelper.loadResource("img/turret base.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		base = FileIOHelper.loadImage("img/turret base.png");
 	}
 	
 	public void draw(Graphics g, int x, int y) {
@@ -57,11 +53,11 @@ public class Turret extends Sprite {
 			AffineTransform t = AffineTransform.getRotateInstance(angle, gun.getWidth() / 2, gun.getHeight() / 2);
 			AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
 			
-			g.drawImage(op.filter(gun, null), x, y-16, null);
+			g.drawImage(op.filter(gun, null), x, y - 16, null);
 		}
 	}
 	
-	public void update(float dt) {
+	public void update(double dt) {
 		if(active) {
 			if(System.currentTimeMillis() - lastShotTime >= SHOOT_DELAY) {
 				Vector2 tc = target.getPosition().add(target.getSize().scale(0.5));

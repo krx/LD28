@@ -17,12 +17,8 @@ public class TileSet {
 	private int tileHeight;
 	
 	public TileSet(String name, String path, int gidBegin, int tileWidth, int tileHeight) {
-		try {
-			BufferedImage original = ImageIO.read(FileIOHelper.loadResource(path));
-			tiles = new SpriteSheet(original, original.getHeight() / tileHeight, original.getWidth() / tileWidth, tileWidth, tileHeight, 0, 0, 0, 0);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		BufferedImage original = FileIOHelper.loadImage(path);
+		tiles = new SpriteSheet(original, original.getHeight() / tileHeight, original.getWidth() / tileWidth, tileWidth, tileHeight, 0, 0, 0, 0);
 		this.name = name;
 		this.gidBegin = gidBegin;
 		gidEnd = gidBegin + tiles.getAllSubImages().size() - 1;

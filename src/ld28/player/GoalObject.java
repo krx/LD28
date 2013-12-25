@@ -49,5 +49,5 @@ public class GoalObject extends Sprite {
 		}
 	}
 	
-	public void update(float dt) {}
+	public void update(double dt) {}
 }
