@@ -93,11 +93,7 @@ public class LD28 extends JGame {
 			e.printStackTrace();
 		}
 		screen = SCREEN.MENU;
-		if(applet) {
-			mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 96f, "",  "Level 1", "Level 2", "Instructions");
-		} else {
-			mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 96f, "",  "Level 1", "Level 2", "Instructions", "Quit");
-		}
+		mainMenu = new Menu("Master Thief", WIDTH, HEIGHT, true, 96f, "",  "Level 1", "Level 2", "Instructions", applet ? "" : "Quit");
 		mainMenu.setFont(rexlia);
 		mainMenu.setFontSize(60f);
 		instructions = new Menu("Instructions", WIDTH, HEIGHT, false, 60f, " ", "WAD / Space / Arrow keys to move", " ", "You have been hired to steal a", "valuable gem, once you find it,","you have one minute to find", "the exit and escape."," "," ", "ESC to return to main menu");
@@ -319,7 +315,7 @@ public class LD28 extends JGame {
 		if(screen == SCREEN.GAME) {
 			switch(screenstate) {
 				case DIALOG:
-					d.iterateCharacters();
+					//d.iterateCharacters();
 					break;
 				case PLAY:
 					p.update(dt);

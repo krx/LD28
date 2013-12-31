@@ -56,8 +56,8 @@ public class Menu extends GUIObject {
 	
 	public int getSelectIndex() {
 		int blank = 0;
-		for(String s : text) {
-			if (s == "") {
+		for(int i=0; i<=sIndex; i++) {
+			if (text[i] == "") {
 				blank++;
 			}
 		}
